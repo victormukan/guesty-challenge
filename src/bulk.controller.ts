@@ -1,6 +1,5 @@
 import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiCreatedResponse } from '@nestjs/swagger';
-import { response } from 'express';
 import { BulkRequestDto } from './bulk.dto';
 import { BulkService } from './bulk.service';
 import { UtilService } from './util.service';
