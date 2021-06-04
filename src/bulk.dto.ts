@@ -18,7 +18,7 @@ export class BulkRequestDto {
   payload: any[];
 
   @ApiPropertyOptional({
-    default: '[{ age: 30 }]',
+    default: '{ age: 30 }',
   })
   body: any;
 }
