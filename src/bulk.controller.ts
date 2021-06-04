@@ -1,5 +1,15 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Post,
+  Query,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { BulkRequestDto } from './bulk.dto';
 import { BulkService } from './bulk.service';
 import { UtilService } from './util.service';
@@ -12,6 +22,7 @@ export class BulkController {
   ) {}
 
   @Post()
+  @ApiQuery({ name: 'detailed', required: false })
   @ApiCreatedResponse({
     type: BulkRequestDto,
     description: 'Perform bulk operation',
@@ -19,7 +30,7 @@ export class BulkController {
   @ApiBadRequestResponse({
     description: 'Validation error',
   })
-  async bulk(@Body() body: BulkRequestDto) {
+  async bulk(@Body() body: BulkRequestDto, @Query('detailed') detailed) {
     const { payload } = body;
 
     if (!payload || !Array.isArray(payload)) {
@@ -38,6 +49,7 @@ export class BulkController {
         responses.length
       }`,
       failed: `${responses.filter((i) => i.failed).length}/${responses.length}`,
+      ...(detailed ? { responses } : {}),
     };
   }
 }
