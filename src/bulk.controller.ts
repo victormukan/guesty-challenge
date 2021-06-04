@@ -34,9 +34,10 @@ export class BulkController {
 
     return {
       statuses: responses.map((i) => i.statusCode),
-      total: `${responses.filter((i) => !i.failed).length}/${
-        responses.filter((i) => i.failed).length
+      success: `${responses.filter((i) => !i.failed).length}/${
+        responses.length
       }`,
+      failed: `${responses.filter((i) => i.failed).length}/${responses.length}`,
     };
   }
 }
